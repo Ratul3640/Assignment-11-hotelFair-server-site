@@ -87,3 +87,25 @@ async function run() {
                 .clearCookie("token", { ...cookieOptions, maxAge: 0 })
                 .send({ success: true });
         });
+        app.get('/rooms', async (req, res) => {
+            const cursor = roomsCollection.find()
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.get('/rooms/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await roomsCollection.findOne(query)
+            res.send(result)
+        })
+        app.get('/myRooms', logger, verifyToken, async (req, res) => {
+            let query = {}
+            if (req.query?.email) {
+                query = { email: req.query.email }
+            }
+            const cursor = myRoomsCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
