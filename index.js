@@ -74,3 +74,16 @@ async function run() {
         const myRoomsCollection = client.db('OurRooms').collection('myRooms')
         const rewviewCollection = client.db('OurRooms').collection('reviews')
 
+        app.post("/jwt", logger, async (req, res) => {
+            const user = req.body;
+            console.log("user for token", user);
+            const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+
+            res.cookie("token", token, cookieOptions).send({ success: true });
+        });
+
+        app.post("/logout", async (req, res) => {
+            res
+                .clearCookie("token", { ...cookieOptions, maxAge: 0 })
+                .send({ success: true });
+        });
