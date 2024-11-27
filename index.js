@@ -109,3 +109,23 @@ async function run() {
             res.send(result)
         })
 
+        app.post('/myRooms', async (req, res) => {
+            const bookingData = req.body
+            const result = await myRoomsCollection.insertOne(bookingData)
+            res.send(result)
+        })
+
+        app.patch('/myRooms/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const update = req.body
+            const updateDate = {
+                $set: {
+                    bookingDate: update.bookingDate
+                }
+            }
+            const result = await myRoomsCollection.updateOne(filter, updateDate, options)
+            res.send(result)
+        })
+
