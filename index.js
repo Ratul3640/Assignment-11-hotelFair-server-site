@@ -136,3 +136,17 @@ async function run() {
             const result = await myRoomsCollection.deleteOne(query)
             res.send(result)
         })
+
+        app.get('/reviews', async (req, res) => {
+            const cursor = rewviewCollection.find().sort({ reviewDate: -1 })
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        app.post('/reviews', async (req, res) => {
+            const userReviews = req.body
+            const result = await rewviewCollection.insertOne(userReviews)
+            res.send(result)
+        })
+
+
