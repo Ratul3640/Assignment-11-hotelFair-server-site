@@ -7,9 +7,7 @@ const jwt = require('jsonwebtoken')
 const app = express()
 const port = process.env.PORT || 5000
 
-
 // midlleware 
-
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
