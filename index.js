@@ -19,7 +19,7 @@ app.use(cors({
     'http://localhost:5173',
     'https://hotel-fair.netlify.app',
     'https://b9a11hotelfairs.netlify.app',
-    'https://hotel-fair-crud.vercel.app'
+    'https://hotel-fair-b9-a11.netlify.app'
   ],
   credentials: true,
   optionsSuccessStatus: 200,
@@ -66,7 +66,6 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
-
     const roomsCollection = client.db('OurRooms').collection('rooms')
     const myRoomsCollection = client.db('OurRooms').collection('myRooms')
     const rewviewCollection = client.db('OurRooms').collection('reviews')
@@ -77,7 +76,6 @@ async function run() {
       const user = req.body;
       console.log("user for token", user);
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    
       res.cookie("token", token, cookieOptions).send({ success: true });
     });
 
